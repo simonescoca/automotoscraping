@@ -1,5 +1,5 @@
 import scrapy
-
+from automotoscraping.items import AutomotoBrand
 
 class AutomotospiderSpider(scrapy.Spider):
     name = "automotospider"
@@ -12,7 +12,7 @@ class AutomotospiderSpider(scrapy.Spider):
 
         brands_names.extend(other_brands_names)
         del other_brands_names
-        brands_names = list(map(lambda name: name.replace('\n', '').replace(' ', '').lower(), brands_names))
+        brands_names = list(map(lambda name: name.replace('\n', '').replace(' ', ''), brands_names))
 
         brands_urls = response.css('h2.plist-bcard-title > a::attr(href)').getall()
         other_brands_urls = response.css('h3.sqlink > a::attr(href)').getall()
@@ -28,12 +28,12 @@ class AutomotospiderSpider(scrapy.Spider):
                 'url': f"https://www.automoto.it{brands_urls[i]}"
             })
         
-        brands = sorted(brands, key=lambda brand: brand['name'])
+        brands = sorted(brands, key=lambda brand: brand['name'].lower())
+        am_brand = AutomotoBrand()
 
         for brand in brands:
-            yield{
-                'name': brand['name'],
-                'url': brand['url']
-            }
+            am_brand['name'] = brand['name']
+            am_brand['url'] = brand['url']
+            yield am_brand
         
         pass
