@@ -1,8 +1,8 @@
 import scrapy
 from automotoscraping.items import AutomotoBrand
 
-class AutomotospiderSpider(scrapy.Spider):
-    name = "automotospider"
+class BrandSpider(scrapy.Spider):
+    name = "brandspider"
     allowed_domains = ["automoto.it"]
     start_urls = ["https://www.automoto.it/catalogo"]
 
@@ -12,7 +12,7 @@ class AutomotospiderSpider(scrapy.Spider):
 
         brands_names.extend(other_brands_names)
         del other_brands_names
-        brands_names = list(map(lambda name: name.replace('\n', '').replace(' ', ''), brands_names))
+        brands_names = list(map(lambda name: name.replace('\n', '').strip(), brands_names))
 
         brands_urls = response.css('h2.plist-bcard-title > a::attr(href)').getall()
         other_brands_urls = response.css('h3.sqlink > a::attr(href)').getall()

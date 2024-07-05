@@ -1,6 +1,10 @@
 # Output
 *.json
 
+# Test files.py
+test.py
+prova.py
+
 # Mac stuff
 .DS_Store
 
