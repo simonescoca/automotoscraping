@@ -15,10 +15,6 @@ class ModelSpider(scrapy.Spider):
             for brand in brands:
                 start_urls.append(brand['url'])
 
-        def start_requests(self):
-            for url in self.start_urls:
-                yield scrapy.Request(url, callback=self.parse)
-
         def parse(self, response):
             brand = response.css('div.plist-pcard a > span.plist-pcard-title-gray::text').get()
             models_names = response.css('div.plist-pcard a::text').extract()
