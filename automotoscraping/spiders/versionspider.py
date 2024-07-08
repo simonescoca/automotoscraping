@@ -4,7 +4,7 @@ import os
 from automotoscraping.items import AutomotoVersion
 
 
-class ModelSpider(scrapy.Spider):
+class VersionSpider(scrapy.Spider):
     name = "versionspider"
     allowed_domains = ["automoto.it"]
     start_urls = []
@@ -22,7 +22,6 @@ class ModelSpider(scrapy.Spider):
 
             versions_names = response.css('div.amodtable-item a.amodtable-item-name::text').extract()
             versions_names = list(map(lambda name: name.replace('\n', '').strip(), versions_names))
-            # versions_names = list(map(lambda name: name[:name.find(' (')], versions_names))
             versions_names = list(filter(lambda name: name != '', versions_names))
 
             versions_urls = response.css('div.amodtable-item a.amodtable-item-name::attr(href)').getall()
