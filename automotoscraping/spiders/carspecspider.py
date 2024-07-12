@@ -36,7 +36,7 @@ class CarSpecSpider(scrapy.Spider):
             performance_values = response.css('div#panel-performance table.datagrid td::text').getall()
 
             values = main_values + chassis_values + engine_values + performance_values
-            values = list(map(lambda value: value.replace('\n', '').replace('  ', '').strip(), values))
+            values = list(map(lambda value: value.replace('\n', '').replace('                                                                    ', ' ').strip(), values))
 
             while '' in values:
                 values.remove('')
